@@ -1,9 +1,10 @@
 class Stage extends Phaser.Scene {
     preload() {
         this.load.path = './assets/'
+        this.load.image('forestBackground', 'forestBackground.jpg')
         this.load.spritesheet('player', 'player.png', {
             frameWidth: 35,
-            frameHeight: 44
+            frameHeight: 44,
         })
     }
 
@@ -12,13 +13,23 @@ class Stage extends Phaser.Scene {
     }
 
     create() {
-        // input
+        // register input keys
         this.cursors = this.input.keyboard.createCursorKeys()
         keyLEFT = this.cursors.left 
         keyRIGHT = this.cursors.right
         keyUP = this.cursors.up
         keyDOWN = this.cursors.down
         keySHIFT = this.cursors.shift
+
+        // create background
+        this.background = this.add.tileSprite(
+            0.0, 
+            0.0, 
+            this.game.config.width, 
+            this.game.config.height, 
+            'forestBackground'
+        ).setOrigin(0, 0)
+        this.backgroundScrollSpeed = -0.75
 
         // create player
         const PLAYER_SPAWN_POSITION = new Phaser.Math.Vector2(
@@ -30,7 +41,7 @@ class Stage extends Phaser.Scene {
             PLAYER_SPAWN_POSITION.x,
             PLAYER_SPAWN_POSITION.y,
             'player',
-        ).setOrigin(0.5, 0.5)
+        ).setOrigin(0.5, 0.5).setScale(1.2)
 
         // player anims
         this.anims.create({
@@ -43,13 +54,14 @@ class Stage extends Phaser.Scene {
             })
         })
         this.player.play('idle')
-
-        this.shootPatternA()
     }
 
     update() {
         // player update
         this.player.update()
+
+        // background scrolling
+        this.background.tilePositionY += this.backgroundScrollSpeed
     }
 
     // Util function. Waits the specified amount of seconds.
