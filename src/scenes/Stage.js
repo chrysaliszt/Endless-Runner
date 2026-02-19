@@ -29,7 +29,10 @@ class Stage extends Phaser.Scene {
             this.game.config.height, 
             'forestBackground'
         ).setOrigin(0, 0)
-        this.backgroundScrollSpeed = -0.75
+        this.backgroundScrollSpeedMin = 0.075
+        this.backgroundScrollSpeedMax = 0.75
+        this.backgroundScrollSpeedScaling = 0.000001
+        this.backgroundScrollSpeed = this.backgroundScrollSpeedMin
 
         // create player
         const PLAYER_SPAWN_POSITION = new Phaser.Math.Vector2(
@@ -54,23 +57,35 @@ class Stage extends Phaser.Scene {
             })
         })
         this.player.play('idle')
+
+        // shot pattern events
+        this.shotPatternEvent = this.time.addEvent({
+            delay: 2000,
+            callback: this.onShotPatternEvent,
+            callbackScope: this,
+            loop: true
+        })
+        this.shotPatternTimeMax = 5000
+        this.shotPatternTimeMin = 1000
+        this.shotPatterTimeScaling = 0.95
+        this.shotPatternTime = this.shotPatternTimeMax
+
     }
 
-    update() {
+    update(time, delta) {
         // player update
         this.player.update()
 
         // background scrolling
-        this.background.tilePositionY += this.backgroundScrollSpeed
+        this.backgroundScrollSpeed += this.backgroundScrollSpeedScaling * delta
+        this.backgroundScrollSpeed = Math.min(this.backgroundScrollSpeed, this.backgroundScrollSpeedMax)
+        this.background.tilePositionY -= this.backgroundScrollSpeed * delta
     }
 
-    // Util function. Waits the specified amount of seconds.
-    // To use in an async function, pair with the await keyword.
-    async wait(time) {
-        return new Promise((resolve) => {
-            setTimeout(() => {
-            resolve("")
-            }, time * 1000.0)
-        })
+    onShotPatternEvent() {
+        this.shotPatternTime *= this.shotPatterTimeScaling
+        this.shotPatternTime = Math.max(this.shotPatternTime, this.shotPatternTimeMin)
+        this.shotPatternEvent.delay = this.shotPatternTime
+        console.log("event! ", this.shotPatternTime)
     }
 }
