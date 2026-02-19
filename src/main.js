@@ -37,7 +37,7 @@ let config = {
     type: Phaser.AUTO,
     width: 640,
     height: 480,
-    scene: [ Stage ]
+    scene: [ Menu, Stage ]
 }
 
 let game = new Phaser.Game(config)
