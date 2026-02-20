@@ -43,4 +43,4 @@ let config = {
 let game = new Phaser.Game(config)
 
 // reserve keyboard bindings
-let keyLEFT, keyRIGHT, keyUP, keyDOWN, keySHIFT
+let keyLEFT, keyRIGHT, keyUP, keyDOWN, keySHIFT, keyESCAPE

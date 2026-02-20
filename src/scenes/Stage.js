@@ -20,6 +20,7 @@ class Stage extends Phaser.Scene {
         keyUP = this.cursors.up
         keyDOWN = this.cursors.down
         keySHIFT = this.cursors.shift
+        keyESCAPE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC)
 
         // create background
         this.background = this.add.tileSprite(
@@ -73,6 +74,11 @@ class Stage extends Phaser.Scene {
     }
 
     update(time, delta) {
+        // check for pause
+        if(keyESCAPE.isDown) {
+            this.scene.start('menuScene') 
+        }
+
         // player update
         this.player.update()
 
