@@ -1,17 +1,20 @@
 // Player prefab.
-class Player extends Phaser.GameObjects.Sprite {
-    constructor(scene, x, y, texture, frame) {
-        super(scene, x, y, texture, frame)
+class Player extends Phaser.Physics.Arcade.Sprite {
+    constructor(scene, x, y) {
+        super(scene, x, y, 'player')
 
         // movement variables
-        this.moveSpeedMax = 3.0
-        this.moveSpeedMin = 2.0
+        this.moveSpeedMax = 300.0
+        this.moveSpeedMin = 200.0
         this.moveDirection = new Phaser.Math.Vector2(0)
 
         scene.add.existing(this)
+        scene.physics.add.existing(this)
+
+        this.setCollideWorldBounds(true, 0.0, 0.0)
     }
 
-    update() {
+    update(time, delta) {
         // movement directions
         this.moveDirection.scale(0.0)
         
@@ -37,7 +40,6 @@ class Player extends Phaser.GameObjects.Sprite {
         }
 
         // apply movement
-        this.x += this.moveDirection.x
-        this.y += this.moveDirection.y
+        this.body.setVelocity(this.moveDirection.x, this.moveDirection.y)
     }
 }

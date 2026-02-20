@@ -45,7 +45,6 @@ class Stage extends Phaser.Scene {
             this, 
             PLAYER_SPAWN_POSITION.x,
             PLAYER_SPAWN_POSITION.y,
-            'player',
         ).setOrigin(0.5, 0.5).setScale(1.2)
 
         // player anims
