@@ -9,13 +9,13 @@ Creative Tilt Explanation:
 
 Requirements:
     - [X] Use multiple Scene classes (dictated by your game's style) 
-    - [ ] Properly transition between Scenes and allow the player to restart w/out having to reload the page 
-    - [ ] Include in-game instructions using text or other means (e.g., tooltips, tutorial, diagram, etc.) 
+    - [X] Properly transition between Scenes and allow the player to restart w/out having to reload the page 
+    - [X] Include in-game instructions using text or other means (e.g., tooltips, tutorial, diagram, etc.) 
     - [X] Have some form of player input/control appropriate to your game design 
     - [X] Include one or more animated characters that use a texture atlas/sprite sheet 
     - [X] Simulate scrolling with a tileSprite (or equivalent means) 
     - [ ] Implement proper collision detection (via Arcade Physics or a custom routine) 
-    - [ ] Have looping background music 
+    - [X] Have looping background music 
     - [ ] Use a minimum of four sound effects for key mechanics, UI, and/or significant events appropriate to your game design 
     - [ ] Use randomness to generate escalating challenge, e.g. terrain, pickups, etc. 
     - [ ] Include some metric of accomplishment that a player can improve over time, e.g., score, survival time, etc. 
@@ -29,7 +29,7 @@ Requirements:
 
 Credits:
     - Forest background texture: "Forest and tree landscape texture abstract background, Aerial top view forest atmosphere area, Texture of forest view from above, Ecosystem and healthy ecology environment concepts." by Kalyakan/stock.adobe.com.
-    - Player texture: "Reimu Sprite" by PumpkinPielex.
+    - Player sprite: "Reimu Sprite" by PumpkinPielex.
 
 */
 

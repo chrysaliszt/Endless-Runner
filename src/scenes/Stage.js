@@ -1,6 +1,7 @@
 class Stage extends Phaser.Scene {
     preload() {
         this.load.path = './assets/'
+        this.load.audio('stageTheme', ['Ballad of the Endless Light Festival.ogg', 'Ballad of the Endless Light Festival.mp3'])
         this.load.image('forestBackground', 'forestBackground.jpg')
         this.load.spritesheet('player', 'player.png', {
             frameWidth: 35,
@@ -71,12 +72,17 @@ class Stage extends Phaser.Scene {
         this.shotPatterTimeScaling = 0.95
         this.shotPatternTime = this.shotPatternTimeMax
 
+        // play stage theme
+        this.stageTheme = this.sound.add('stageTheme', {loop: true})
+        this.stageTheme.play()
+        this.stageTheme.addListener("looped", this.onMusicLoop)
     }
 
     update(time, delta) {
         // check for pause
         if(keyESCAPE.isDown) {
             this.scene.start('menuScene') 
+            this.stageTheme.destroy()
         }
 
         // player update
@@ -93,5 +99,9 @@ class Stage extends Phaser.Scene {
         this.shotPatternTime = Math.max(this.shotPatternTime, this.shotPatternTimeMin)
         this.shotPatternEvent.delay = this.shotPatternTime
         console.log("event! ", this.shotPatternTime)
+    }
+
+    onMusicLoop(music) {
+        music.setSeek(131.675)
     }
 }
