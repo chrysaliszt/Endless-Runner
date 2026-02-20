@@ -11,7 +11,12 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         scene.add.existing(this)
         scene.physics.add.existing(this)
 
+        this.setOrigin(0.5, 0.5)
+        this.setScale(1.2)
+
         this.setCollideWorldBounds(true, 0.0, 0.0)
+        this.body.setOffset(this.width / 4, this.height / 4)
+        this.body.setCircle(this.width / 4)
     }
 
     update(time, delta) {
@@ -40,6 +45,6 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         }
 
         // apply movement
-        this.body.setVelocity(this.moveDirection.x, this.moveDirection.y)
+        this.setVelocity(this.moveDirection.x, this.moveDirection.y)
     }
 }
