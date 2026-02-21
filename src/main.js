@@ -30,6 +30,7 @@ Requirements:
 Credits:
     - Forest background texture: "Forest and tree landscape texture abstract background, Aerial top view forest atmosphere area, Texture of forest view from above, Ecosystem and healthy ecology environment concepts." by Kalyakan/stock.adobe.com.
     - Player sprite: "Reimu Sprite" by PumpkinPielex.
+    - Enemy sprite: "Fairy Yellow" by Unknown artist, from danmakufu thread 8-880 (CC BY-NC 4.0).
 
 */
 

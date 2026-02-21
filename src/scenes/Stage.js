@@ -7,6 +7,10 @@ class Stage extends Phaser.Scene {
             frameWidth: 35,
             frameHeight: 44,
         })
+        this.load.spritesheet('enemy', 'enemy.png', {
+            frameWidth: 32,
+            frameHeight: 32,
+        })
     }
 
     constructor() {
@@ -49,7 +53,7 @@ class Stage extends Phaser.Scene {
 
         // player anims
         this.anims.create({
-            key: 'idle',
+            key: 'idlePlayer',
             frameRate: 8,
             repeat: -1,
             frames: this.anims.generateFrameNumbers('player', {
@@ -57,7 +61,31 @@ class Stage extends Phaser.Scene {
                 end: 6
             })
         })
-        this.player.play('idle')
+        this.player.play('idlePlayer')
+
+        // create enemies
+        this.enemies = this.add.group({
+            classType: Enemy,
+            maxSize: 50,
+            runChildUpdate: true
+        })
+
+        // enemy anims
+        this.anims.create({
+            key: 'idleEnemy',
+            frameRate: 8,
+            repeat: -1,
+            yoyo: true,
+            frames: this.anims.generateFrameNumbers('enemy', {
+                start: 0,
+                end: 2
+            })
+        })
+
+        // player-enemy collisions
+        this.physics.add.collider(this.player, this.enemies, (player, enemy) => {
+            player.setPosition(PLAYER_SPAWN_POSITION.x, PLAYER_SPAWN_POSITION.y)
+        })
 
         // shot pattern events
         this.shotPatternEvent = this.time.addEvent({
@@ -98,6 +126,12 @@ class Stage extends Phaser.Scene {
         this.shotPatternTime = Math.max(this.shotPatternTime, this.shotPatternTimeMin)
         this.shotPatternEvent.delay = this.shotPatternTime
         console.log("event! ", this.shotPatternTime)
+
+        const enemy = this.enemies.get()
+        if(enemy) {
+            enemy.spawn(this.game.config.width / 2, this.game.config.height / 2)
+            enemy.body.setVelocityY(200)
+        }
     }
 
     onMusicLoop(music) {
