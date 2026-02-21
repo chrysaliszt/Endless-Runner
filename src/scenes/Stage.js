@@ -11,6 +11,7 @@ class Stage extends Phaser.Scene {
             frameWidth: 32,
             frameHeight: 32,
         })
+        this.load.image('playerShot', 'shot.png')
     }
 
     constructor() {
@@ -27,6 +28,7 @@ class Stage extends Phaser.Scene {
         keySHIFT = this.cursors.shift
         keyESCAPE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC)
         keyRESTART = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R)
+        keySHOOT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Z)
 
         // set up pause toggle
         keyESCAPE.on('down', () => {
@@ -58,6 +60,22 @@ class Stage extends Phaser.Scene {
         this.backgroundScrollSpeedScaling = 0.000001
         this.backgroundScrollSpeed = this.backgroundScrollSpeedMin
 
+        // score counter
+        this.scoreCount = 0
+
+        // score text
+        let scoreConfig = {
+            fontFamily: 'Garamond',
+            fontSize: '28px',
+            color: '#ffffff',
+            align: 'left',
+            padding: {
+                top: 5,
+                bottom: 5,
+            }
+        }
+        this.scoreText = this.add.text(10.0, 0.0, ["Score: ", this.scoreCount], scoreConfig)
+
         // create player
         const PLAYER_SPAWN_POSITION = new Phaser.Math.Vector2(
             this.game.config.width * 0.5, 
@@ -80,6 +98,15 @@ class Stage extends Phaser.Scene {
             })
         })
         this.player.play('idlePlayer')
+
+        // create player shots
+        this.playerShots = this.add.group({
+            classType: PlayerShot,
+            maxSize: 5,
+            runChildUpdate: true
+        })
+        this.playerShotCooldown = 150.0
+        this.playerShotPrevTime = 0.0
 
         // create enemies
         this.enemies = this.add.group({
@@ -105,10 +132,18 @@ class Stage extends Phaser.Scene {
             this.quitToMenu()
         })
 
+        // shot-enemy collisions
+        this.physics.add.collider(this.playerShots, this.enemies, (shot, enemy) => {
+            this.scoreCount++
+            this.scoreText.text = ["Score: ", this.scoreCount]
+            shot.kill()
+            enemy.kill()
+        })
+
         // shot pattern events
         this.shotPatternEvent = this.time.addEvent({
             delay: 2000,
-            callback: this.onShotPatternEvent,
+            callback: this.onEnemyPatternEvent,
             callbackScope: this,
             loop: true
         })
@@ -131,6 +166,14 @@ class Stage extends Phaser.Scene {
         this.backgroundScrollSpeed += this.backgroundScrollSpeedScaling * delta
         this.backgroundScrollSpeed = Math.min(this.backgroundScrollSpeed, this.backgroundScrollSpeedMax)
         this.background.tilePositionY -= this.backgroundScrollSpeed * delta
+
+        if(keySHOOT.isDown && time > this.playerShotPrevTime) {
+            const shot = this.playerShots.get()
+            if(shot) {
+                shot.spawn(this.player.x, this.player.y)
+                this.playerShotPrevTime = time + this.playerShotCooldown
+            }
+        }
     }
 
     quitToMenu() {
@@ -141,7 +184,7 @@ class Stage extends Phaser.Scene {
         this.scene.start('menuScene')
     }
 
-    onShotPatternEvent() {
+    onEnemyPatternEvent() {
         this.shotPatternTime *= this.shotPatterTimeScaling
         this.shotPatternTime = Math.max(this.shotPatternTime, this.shotPatternTimeMin)
         this.shotPatternEvent.delay = this.shotPatternTime

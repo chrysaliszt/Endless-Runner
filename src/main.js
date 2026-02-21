@@ -20,11 +20,11 @@ Requirements:
     - [X] Have looping background music 
     - [ ] Use a minimum of four sound effects for key mechanics, UI, and/or significant events appropriate to your game design 
     - [X] Use randomness to generate escalating challenge, e.g. terrain, pickups, etc. 
-    - [ ] Include some metric of accomplishment that a player can improve over time, e.g., score, survival time, etc. 
+    - [X] Include some metric of accomplishment that a player can improve over time, e.g., score, survival time, etc. 
     - [X] Be theoretically endless 
     - [X] Be playable for at least 15 seconds for a new player of low to moderate skill 
     - [X] Run without significant crashes or errors 
-    - [ ] Include in-game credits for all roles, assets, music, etc. 
+    - [X] Include in-game credits for all roles, assets, music, etc. 
     Does your game...
     - [X] ...do something technically interesting? Are you particularly proud of a programming technique you implemented? Did you look beyond the class examples and learn how to do something new?
     - [X]...have a great visual style? Does it use music or art that you're particularly proud of? Are you trying something new or clever with the endless runner form?
@@ -52,4 +52,4 @@ let config = {
 let game = new Phaser.Game(config)
 
 // reserve keyboard bindings
-let keyLEFT, keyRIGHT, keyUP, keyDOWN, keySHIFT, keyESCAPE, keyRESTART
+let keyLEFT, keyRIGHT, keyUP, keyDOWN, keySHIFT, keyESCAPE, keyRESTART, keySHOOT
