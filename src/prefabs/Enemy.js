@@ -22,6 +22,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
     spawn(x, y) {
         this.setActive(true);
         this.setVisible(true);
+        this.play('idleEnemy')
         this.setPosition(x, y)
     }
 

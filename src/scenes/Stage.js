@@ -129,7 +129,7 @@ class Stage extends Phaser.Scene {
 
         const enemy = this.enemies.get()
         if(enemy) {
-            enemy.spawn(this.game.config.width / 2, this.game.config.height / 2)
+            enemy.spawn(this.game.config.width / 2, 0.0)
             enemy.body.setVelocityY(200)
         }
     }
