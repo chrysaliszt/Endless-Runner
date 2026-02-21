@@ -4,8 +4,10 @@ CMPM 120
 Endless Runner Project
 
 Creative Tilt Explanation:
-    - Technical: 
-    - Aesthetic: 
+    - Technical:    I use object pooling to make the creation of enemies and shots more efficient. 
+                    This also acts as a limit on the game's difficulty while rewarding aggressive play.
+    - Aesthetic:    The style is inspired by Touhou Project, a game series that is known for its fanworks.
+                    This game uses Touhou-style music and visuals, made by a fan group I work with.
 
 Requirements:
     - [X] Use multiple Scene classes (dictated by your game's style) 
@@ -14,18 +16,18 @@ Requirements:
     - [X] Have some form of player input/control appropriate to your game design 
     - [X] Include one or more animated characters that use a texture atlas/sprite sheet 
     - [X] Simulate scrolling with a tileSprite (or equivalent means) 
-    - [ ] Implement proper collision detection (via Arcade Physics or a custom routine) 
+    - [X] Implement proper collision detection (via Arcade Physics or a custom routine) 
     - [X] Have looping background music 
     - [ ] Use a minimum of four sound effects for key mechanics, UI, and/or significant events appropriate to your game design 
-    - [ ] Use randomness to generate escalating challenge, e.g. terrain, pickups, etc. 
+    - [X] Use randomness to generate escalating challenge, e.g. terrain, pickups, etc. 
     - [ ] Include some metric of accomplishment that a player can improve over time, e.g., score, survival time, etc. 
-    - [ ] Be theoretically endless 
-    - [ ] Be playable for at least 15 seconds for a new player of low to moderate skill 
-    - [ ] Run without significant crashes or errors 
+    - [X] Be theoretically endless 
+    - [X] Be playable for at least 15 seconds for a new player of low to moderate skill 
+    - [X] Run without significant crashes or errors 
     - [ ] Include in-game credits for all roles, assets, music, etc. 
     Does your game...
-    - [ ] ...do something technically interesting? Are you particularly proud of a programming technique you implemented? Did you look beyond the class examples and learn how to do something new?
-    - [ ]...have a great visual style? Does it use music or art that you're particularly proud of? Are you trying something new or clever with the endless runner form?
+    - [X] ...do something technically interesting? Are you particularly proud of a programming technique you implemented? Did you look beyond the class examples and learn how to do something new?
+    - [X]...have a great visual style? Does it use music or art that you're particularly proud of? Are you trying something new or clever with the endless runner form?
 
 Credits:
     - Forest background texture: "Forest and tree landscape texture abstract background, Aerial top view forest atmosphere area, Texture of forest view from above, Ecosystem and healthy ecology environment concepts." by Kalyakan/stock.adobe.com.
@@ -41,7 +43,7 @@ let config = {
     physics: {
         default: 'arcade',
         arcade: {
-            debug: true
+            debug: false
         }
     },
     scene: [ Menu, Stage ]
@@ -50,4 +52,4 @@ let config = {
 let game = new Phaser.Game(config)
 
 // reserve keyboard bindings
-let keyLEFT, keyRIGHT, keyUP, keyDOWN, keySHIFT, keyESCAPE
+let keyLEFT, keyRIGHT, keyUP, keyDOWN, keySHIFT, keyESCAPE, keyRESTART

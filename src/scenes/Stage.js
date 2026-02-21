@@ -26,6 +26,24 @@ class Stage extends Phaser.Scene {
         keyDOWN = this.cursors.down
         keySHIFT = this.cursors.shift
         keyESCAPE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC)
+        keyRESTART = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R)
+
+        // set up pause toggle
+        keyESCAPE.on('down', () => {
+            if(this.game.isPaused) {
+                this.sound.resumeAll()
+                this.game.resume()
+            }
+            else {
+                this.sound.pauseAll()
+                this.game.pause()
+            }
+        })
+
+        // set up restart during pause
+        keyRESTART.on('down', () => {
+            this.quitToMenu()
+        })
 
         // create background
         this.background = this.add.tileSprite(
@@ -84,7 +102,7 @@ class Stage extends Phaser.Scene {
 
         // player-enemy collisions
         this.physics.add.collider(this.player, this.enemies, (player, enemy) => {
-            player.setPosition(PLAYER_SPAWN_POSITION.x, PLAYER_SPAWN_POSITION.y)
+            this.quitToMenu()
         })
 
         // shot pattern events
@@ -106,12 +124,6 @@ class Stage extends Phaser.Scene {
     }
 
     update(time, delta) {
-        // check for pause
-        if(keyESCAPE.isDown) {
-            this.scene.start('menuScene') 
-            this.stageTheme.destroy()
-        }
-
         // player update
         this.player.update()
 
@@ -121,16 +133,27 @@ class Stage extends Phaser.Scene {
         this.background.tilePositionY -= this.backgroundScrollSpeed * delta
     }
 
+    quitToMenu() {
+        this.scene.stop('stageScene')
+        this.sound.removeAll()
+        this.anims.remove('idlePlayer')
+        this.anims.remove('idleEnemy')
+        this.scene.start('menuScene')
+    }
+
     onShotPatternEvent() {
         this.shotPatternTime *= this.shotPatterTimeScaling
         this.shotPatternTime = Math.max(this.shotPatternTime, this.shotPatternTimeMin)
         this.shotPatternEvent.delay = this.shotPatternTime
         console.log("event! ", this.shotPatternTime)
 
-        const enemy = this.enemies.get()
-        if(enemy) {
-            enemy.spawn(this.game.config.width / 2, 0.0)
-            enemy.body.setVelocityY(200)
+        for(let i = 0; i < 10; i++) {
+            const enemy = this.enemies.get()
+            if(enemy) {
+                enemy.spawn(Phaser.Math.Between(0.0, this.game.config.width), -enemy.height / 2)
+                enemy.body.setVelocityY(Phaser.Math.Between(50, 400))
+            }
+
         }
     }
 

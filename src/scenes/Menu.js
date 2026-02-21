@@ -10,7 +10,7 @@ class Menu extends Phaser.Scene {
     create() {
         // menu text config
         let menuConfig = {
-            fontFamily: 'Courier',
+            fontFamily: 'Garamond',
             fontSize: '28px',
             // backgroundColor: '#000000',
             color: '#ffffff',
@@ -24,21 +24,10 @@ class Menu extends Phaser.Scene {
 
         // display menu text
         this.add.text(game.config.width * 0.5, game.config.height * 0.45, 'REIMU\'S REPETITIVE ROUTINE', menuConfig).setOrigin(0.5)
-        this.add.text(game.config.width * 0.5, game.config.height * 0.5, 'Use ←↑↓→ to move & SHIFT to slow', menuConfig).setOrigin(0.5)
-        this.add.text(game.config.width * 0.5, game.config.height * 0.55, 'Press ↑ to start', menuConfig).setOrigin(0.5)
+        this.add.text(game.config.width * 0.5, game.config.height * 0.50, 'Use ←↑↓→ to move & SHIFT to slow', menuConfig).setOrigin(0.5)
+        this.add.text(game.config.width * 0.5, game.config.height * 0.55, 'Use ESC to pause/resume & R to restart', menuConfig).setOrigin(0.5)
+        this.add.text(game.config.width * 0.5, game.config.height * 0.60, 'Press any key to start', menuConfig).setOrigin(0.5)
         
-        // register input keys
-        this.cursors = this.input.keyboard.createCursorKeys()
-        keyLEFT = this.cursors.left 
-        keyRIGHT = this.cursors.right
-        keyUP = this.cursors.up
-        keyDOWN = this.cursors.down
-        keySHIFT = this.cursors.shift
-    }
-
-    update() {
-        if(keyUP.isDown) {
-            this.scene.start('stageScene')    
-        }
+        this.input.keyboard.once('keydown', () => { this.scene.start('stageScene') })
     }
 }
